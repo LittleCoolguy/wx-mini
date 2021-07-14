@@ -1,0 +1,111 @@
+#配置Tomcat
+server:
+  tomcat:
+    uri-encoding: utf-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000ms
+  port: 8080
+  servlet:
+    context-path: /wxmini
+
+#配置mysql数据源
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://81.70.239.23:3306/emos?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+      initial-size: 8
+      max-active: 16
+      min-idle: 8
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+#配置Redis数据源
+  redis:
+    database: 0
+    host: 81.70.239.23
+    port: 6379
+    password: 123456
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+
+  #配置mongodb数据源
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: emos
+      authentication-database: admin
+      username: admin
+      password: abc123456
+
+  #电子邮件配置
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: 15835479776@163.com
+    password: GPCIWQHPTQYQVUCH
+    protocol: smtp
+
+#配置mybatis
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.qizegao.wxmini.db.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+#配置日志输出
+logging:
+  level:
+    root: info
+    com.qizegao.wxmini.db.dao: warn
+  pattern:
+    console: "%d{HH:mm:ss}  %-5level  %msg%n"
+
+#JWT密钥
+emos:
+  jwt:
+    #密钥
+    secret: GQZ8888
+    #过期时间（天）
+    expire: 5
+    #缓存时间（天）
+    cache-expire: 10
+
+  #常用邮箱
+  email:
+    system: 15835479776@163.com
+    hr: g283794672@qq.com
+
+  #项目接口校验码（30天官网更新一次）
+  code: CED30D71945CA348
+
+  #接收会议审批结果的url路径（windows的ip）
+  recieveNotify: http://192.168.1.106:8080/wxmini/meeting/recieveNotify
+
+#工作流项目的访问地址（Linux的ip）
+workflow:
+  url: http://81.70.239.23:9090/emos-workflow
+
+#腾讯云TRTC的APPID和密钥
+trtc:
+  appid: 1400546271
+  key: ee942102b413f3d44e856494524d5fc0b16d7c508dbea9702a3dae6dd2a0f057
+  expire: 86400
+
+#微信开发者账号、密钥
+wx:
+  app-id: wxb12191f3b9716e24
+  app-secret: 8be228948e85cd485e8b656498922b74
